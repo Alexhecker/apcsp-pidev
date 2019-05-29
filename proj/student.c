@@ -1,75 +1,43 @@
 #include <stdio.h>
-#include <string.h>
- 
+
 struct Student {
-  char fname[50];
-  char lname[50];
+  char fname[100];
+  char lname[100];
   int age;
   int id;
 };
 
-int enterStudent (struct Student* student)
+void printstudents(struct Student student)
 {
-	char first[50], last[50];
-	char studentAge[50], studentId[50];
-	int yearsOld;
-	int studentNumber;
-
-while (1)
-{
-	printf("First name?");
-	fgets(first, 50, stdin);
-	if (sscanf(first, "%s", student->fname) == 1) break;
-		printf("Choose a better name.");
+  printf("This students Name is %s %s and there age is %d and student ID is %d", student.fname, student.lname, student.age, student.id);
 }
 
-while (1)
+void studentMain(int argc, char* argv[])
 {
-	printf("Last name?");
-	fgets(last, 50, stdin);
-	if (sscanf(last, "%s", student->lname) == 1) break;
-		printf("Choose a better surname.");
+ char input[100];
+ struct Student student1;
+
+ if (argc < 4) {
+    printf("Please enter first name");
+    fgets(input, 100, stdin);
+    sscanf(input, "%s", student1.fname);
+    printf("Please enter last name");
+    fgets(input, 100, stdin);
+    sscanf(input, "%s", student1.lname);
+    printf("Please enter age");
+    fgets(input, 100, stdin);
+    sscanf(input, "%d", &student1.age);
+    printf("Please enter student ID");
+    fgets(input, 100, stdin);
+    sscanf(input, "%d", &student1.id);
 }
+  else {
+    sscanf(argv[1], "%s", student1.fname);
+    sscanf(argv[2], "%s", student1.lname);
+    sscanf(argv[3], "%d", &student1.age);
+    sscanf(argv[4], "%d", &student1.id);
 
-while (1)
-{
-	printf("Age?");
-	fgets(studentAge, 50, stdin);
-	if (sscanf(studentAge, "%d", &yearsOld) == 1) break;
-		printf("Inappropriate age.");
 }
-student->age = yearsOld;
+printstudents(student1);
 
-while (1)
-{
-	printf("Id?");
-	fgets(studentId, 50, stdin);
-	if (sscanf(studentId, "%d", &studentNumber) == 1) break;
-		printf("Inappropriate Id number.");
-}
-student->id = studentNumber;
-}
-
-int printStudent (struct Student* student)
-{
-	printf("First name: %s\nLast name: %s\nAge: %d\nId: %d\n\n", student->fname, student->lname, student->age, student->id);
-}
-
-int main ()
-{
-	char cont[50];
-	int i = 0;
-	int n = 0;
-
-	struct Student myStudent[25];
-	do {
-	enterStudent(&myStudent[i]);
-	i++;
-	printf("Add another? (Y/N) ");
-	fgets(cont, 50, stdin);
-} while (i < 25 && (cont[0] == 'Y'));
-
-printf("\n");
-for (n = 0; n < i; n++)
-	printStudent(&myStudent[n]);
 }
