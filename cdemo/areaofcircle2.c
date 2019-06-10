@@ -1,83 +1,88 @@
 #include <stdio.h>
-#include <stdlib.h> 
-#include <math.h>
-float b;
-float number1;
-float number2;
-float smaller; 
-float larger; 
-char input[256], name[256]; 
-char input2[256], name2[256];
-float getnumber();
-float getnumber2();
-float area(float area);
-int main(){
+#include <string.h>
 
-float one = getnumber();
-float two = getnumber2();
-
-if(two>one){
-smaller = one; 
-larger = two; 
-}
-else{
-smaller = two;
-larger = one;
-}
-for(float r=smaller; r< larger;r++){
-b = area(r);
-printf("Value b - %f\n", b);
-} 
-printf("End of Output\n");
-}
-float area(float area){
-  int b =0;
-  b = area * area * 3.14; 
-  return b;
+float areaOfCircle (float radius)
+{
+	printf("radius: %f\n", radius);
+	return (3.14*radius*radius);
 }
 
-float getnumber(){
-int test = 0;
-while(test==0){
-printf("Give me a number to calculate the area\n");
-fgets(input, 256, stdin);
-sscanf(input,"%s", name); 
-printf("First number is %s\n", name);
- number1 = atof(name);
-if(number1!= 0){
-test=1;
-}
-else if(number2==0){
-  printf("Input is not a number or is blank, so number is set to 3.5\n");
-  number1 = 3.5;
-  test = 1;
-}
-else{
-printf("That is not a number! Please input a number!\n");
-}
-}
-return number1; 
-}
-float getnumber2(){
-int test = 0;
-while(test==0){
-printf("Give me a second number to calculate the area\n");
-fgets(input2, 256, stdin);
-sscanf(input2,"%s", name2); 
-printf("Second number is %s\n", name2);
-number2 = atof(name2);
-if(number2!=0){
-test=1;
-}
-else if(number2 ==0){
-printf("Input is not a number or is blank, so number is set to 12.5\n");
-number2 = 12.5;
-test = 1;
+int main(int argc, char* argv[])
+{	
+  float area;
+  char smallStr[256], bigStr[256];
+  int smallRad;
+  int bigRad;
+  int tempRad;
 
+  if (argc != 3)
+  {
+	printf("Needs two radii.\n");
+	
+	  while (1)
+  	  {
+	  fgets(smallStr, 256, stdin);
+	  
+   	  if (sscanf(smallStr, "%d", &smallRad) == 1) break;
+	  printf("Invalid  radii size.\nPlease put in a number\n");
+  	  
+	  }
+  	
+	  while (1)
+  	  {
+	  
+	  fgets(bigStr, 256, stdin);
+	  
+	  	  if (sscanf(bigStr, "%d", &bigRad) == 1) break;
+	  	  printf("Invalid radii size.\nPlease put in a number\n");
+	  }
+
+  if (smallRad > bigRad)
+  {
+	tempRad = smallRad;
+	smallRad = bigRad;
+	bigRad = tempRad;
+  }
+
+  for (int i = smallRad; i <= bigRad; i++)
+  {
+	area = areaOfCircle(i);
+	printf("area: %f\n\n", area);
+  }
+  }
+  
+  else
+  {
+  int arg1;
+  int arg2;
+  int found = sscanf(argv[1], "%d", &arg1);
+	if (found != 1)
+	{
+	  printf("First argument isn't float.\n");
+	  return 1;
+	}
+  found = sscanf(argv[2], "%d", &arg2);
+  if (found != 1)
+  {
+	printf("Second argument isn't float.\n");
+	return 1;
+  }
+  if (arg2 > arg1)
+  {
+	bigRad = arg2;
+	smallRad = arg1;
+  }
+  else
+  {
+	bigRad = arg1;
+	smallRad = arg2;
+  }
+
+  for (float i = smallRad; i <= bigRad; i++)
+  {
+	area = areaOfCircle(i);
+	printf("area: %f\n", area);
+  }
 }
-else{
-printf("That is not a number! Please input a number!\n");
-}
-}
-return number2; 
+
 }
